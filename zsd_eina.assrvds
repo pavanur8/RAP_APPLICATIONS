@@ -1,0 +1,6 @@
+@EndUserText.label: 'Ser Def Purchasing Info General Data'
+define service ZSD_EINA {
+  expose z_c_eina   as EINA;
+  expose z_c_eine   as EINE;
+  expose ZQuickView as Quickview;
+}

@@ -1,0 +1,25 @@
+@EndUserText.label : 'Purchasing Info Record: Purchasing Organization Data'
+@AbapCatalog.enhancement.category : #NOT_EXTENSIBLE
+@AbapCatalog.tableCategory : #TRANSPARENT
+@AbapCatalog.deliveryClass : #A
+@AbapCatalog.dataMaintenance : #ALLOWED
+define table zdb_eine {
+
+  key client      : abap.clnt not null;
+  key infnr       : abap.char(10) not null;
+  key ekorg       : abap.char(4) not null;
+  esokz           : abap.char(1);
+  werks           : abap.char(4);
+  ernam           : abp_creation_user;
+  erdat           : abp_creation_tstmpl;
+  ebeln           : abap.char(10);
+  ebelp           : abap.char(5);
+  meins           : abap.unit(3);
+  @Semantics.quantity.unitOfMeasure : 'zdb_eine.meins'
+  bstma           : abap.quan(13,3);
+  waers           : abap.cuky;
+  @Semantics.amount.currencyCode : 'zdb_eine.waers'
+  netpr           : abap.curr(11,2);
+  last_changed_at : abp_locinst_lastchange_tstmpl;
+
+}

@@ -1,0 +1,44 @@
+FUNCTION zbapi_eina_create641
+  IMPORTING
+    VALUE(peina_create) TYPE zbapi_eina_str
+    VALUE(peina_update) TYPE zbapi_eina_str
+  EXPORTING
+    VALUE(return) TYPE bapiret2.
+
+
+
+
+  DATA wa TYPE zdb_eina.
+  IF peina_create IS NOT INITIAL.
+    wa-infnr = peina_create-infnr.
+    wa-matnr = peina_create-matnr.
+    wa-matkl = peina_create-matkl.
+    wa-lifnr = peina_create-lifnr.
+    wa-status = peina_create-status.
+    wa-ernam = peina_create-ernam.
+    wa-erdat = peina_create-erdat.
+    wa-meins = peina_create-meins.
+    wa-telf1 = peina_create-telf1.
+    wa-urzla = peina_create-urzla.
+    wa-mfrnr = peina_create-mfrnr.
+    wa-last_changed_at = peina_create-last_changed_at.
+
+    INSERT zdb_eina FROM wa.
+    IF sy-subrc EQ 0.
+      return-type = 'S'.
+      return-id = 'ZRAP_MSG641'.
+      return-number = '000'.
+      return-message_v1 = peina_create-infnr.
+    ELSE.
+      return-type = 'E'.
+      return-id = 'ZRAP_MSG641'.
+      return-number = '001'.
+      return-message_v1 = peina_create-infnr.
+    ENDIF.
+  ENDIF.
+
+*  IF peina_update IS NOT INITIAL.
+*    MODIFY zdb_eina FROM TABLE peina_update.
+*  ENDIF.
+
+ENDFUNCTION.

@@ -1,0 +1,106 @@
+FUNCTION zbapi_eina_crud641
+  IMPORTING
+    VALUE(infnr_create) TYPE ztt_ifnr_eina_create641 OPTIONAL
+    VALUE(infnr_update) TYPE ztt_ifnr_eina_update641 OPTIONAL
+    VALUE(infnr_delete) TYPE ztt_ifnr_eina_delete641 OPTIONAL
+    VALUE(ekorg_create) TYPE ztt_ekorg_eine_create641 OPTIONAL
+    VALUE(ekorg_update) TYPE ztt_ekorg_eine_udate641 OPTIONAL
+    VALUE(ekorg_delete) TYPE ztt_ekorg_eine_delete641 OPTIONAL
+  EXPORTING
+    VALUE(return) TYPE bapiret2.
+
+
+
+
+  IF infnr_create IS NOT INITIAL.
+    INSERT zdb_eina FROM TABLE infnr_create.
+    IF sy-subrc = 0.
+      return-type = 'S'.
+      return-id = 'ZRAP_MSG641'.
+      return-number = '000'.
+      return-message_v1 = infnr_create[ 1 ]-infnr.
+    ELSE.
+      return-type = 'E'.
+      return-id = 'ZRAP_MSG641'.
+      return-number = '001'.
+      return-message_v1 = infnr_create[ 1 ]-infnr.
+    ENDIF.
+  ENDIF.
+
+  IF infnr_update IS   NOT INITIAL.
+    MODIFY zdb_eina FROM TABLE infnr_update.
+    IF sy-subrc = 0.
+      return-type = 'S'.
+      return-id = 'ZRAP_MSG641'.
+      return-number = '004'.
+      return-message_v1 = infnr_update[ 1 ]-infnr.
+    ELSE.
+      return-type = 'E'.
+      return-id = 'ZRAP_MSG641'.
+      return-number = '005'.
+      return-message_v1 = infnr_update[ 1 ]-infnr.
+    ENDIF.
+  ENDIF.
+
+  IF infnr_delete IS NOT INITIAL .
+    DELETE zdb_eina FROM TABLE infnr_delete.
+    IF sy-subrc = 0.
+      return-type = 'S'.
+      return-id = 'ZRAP_MSG641'.
+      return-number = '002'.
+      return-message_v1 = infnr_delete[ 1 ]-infnr.
+    ELSE.
+      return-type = 'E'.
+      return-id = 'ZRAP_MSG641'.
+      return-number = '003'.
+      return-message_v1 = infnr_delete[ 1 ]-infnr.
+    ENDIF.
+  ENDIF.
+
+  IF ekorg_create IS NOT INITIAL.
+    INSERT zdb_eine FROM TABLE ekorg_create.
+    IF sy-subrc = 0.
+      return-type = 'S'.
+      return-id = 'ZRAP_MSG641'.
+      return-number = '006'.
+      return-message_v1 = ekorg_create[ 1 ]-ekorg.
+    ELSE.
+      return-type = 'E'.
+      return-id = 'ZRAP_MSG641'.
+      return-number = '007'.
+      return-message_v1 = ekorg_create[ 1 ]-infnr.
+    ENDIF.
+  ENDIF.
+
+
+  IF ekorg_update IS NOT INITIAL.
+    MODIFY zdb_eine FROM TABLE ekorg_update.
+    IF sy-subrc = 0.
+      return-type = 'S'.
+      return-id = 'ZRAP_MSG641'.
+      return-number = '0008'.
+      return-message_v1 = ekorg_update[ 1 ]-ekorg.
+    ELSE.
+      return-type = 'E'.
+      return-id = 'ZRAP_MSG641'.
+      return-number = '009'.
+      return-message_v1 = ekorg_update[ 1 ]-ekorg.
+    ENDIF.
+  ENDIF.
+
+  IF ekorg_delete IS NOT INITIAL.
+    DELETE zdb_eine FROM TABLE ekorg_delete.
+    IF sy-subrc = 0.
+      return-type = 'S'.
+      return-id = 'ZRAP_MSG641'.
+      return-number = '010'.
+      return-message_v1 = ekorg_delete[ 1 ]-ekorg.
+    ELSE.
+      return-type = 'E'.
+      return-id = 'ZRAP_MSG641'.
+      return-number = '011'.
+      return-message_v1 = ekorg_delete[ 1 ]-ekorg.
+    ENDIF.
+  ENDIF.
+
+ENDFUNCTION.

@@ -1,0 +1,23 @@
+@EndUserText.label : 'Purchasing Info Record: General Data'
+@AbapCatalog.enhancement.category : #NOT_EXTENSIBLE
+@AbapCatalog.tableCategory : #TRANSPARENT
+@AbapCatalog.deliveryClass : #A
+@AbapCatalog.dataMaintenance : #ALLOWED
+define table zdb_eina {
+
+  key client      : abap.clnt not null;
+  key infnr       : abap.char(10) not null;
+  matnr           : abap.char(40);
+  matkl           : abap.char(9);
+  lifnr           : abap.char(10);
+  status          : abap_boolean;
+  ernam           : abp_creation_user;
+  erdat           : abp_creation_tstmpl;
+  meins           : abap.unit(3);
+  telf1           : abap.char(10);
+  urzla           : abap.char(3);
+  mfrnr           : abap.char(10);
+  zimage          : abap.char(256);
+  last_changed_at : abp_locinst_lastchange_tstmpl;
+
+}

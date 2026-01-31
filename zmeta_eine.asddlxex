@@ -1,0 +1,142 @@
+@Metadata.layer: #CORE
+@UI:{
+     headerInfo: {
+    typeName: 'Purchasing Organization Data',
+    typeNamePlural: 'Purchasing Organizations Data',
+    title.value: 'Infnr',
+     description : { value: 'Ekorg' },
+//typeImageUrl: 'https://raw.githubusercontent.com/SAP-samples/fiori-elements-opensap/main/week1/images/airlines/Sunset-Wings-logo.png'},
+//typeImageUrl: 'https://iconscout.com/free-icon/free-sap-logo-icon_3031608'},
+typeImageUrl: 'https://th.bing.com/th/id/OIP.3SBPHAHGbAvcIyQYPZHXNgHaHa?w=149&h=180&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3'},
+presentationVariant: [{ sortOrder: [{ by: 'Ekorg', direction: #ASC }] }]
+
+}
+annotate entity z_c_eine with
+{
+  @UI.facet: [{
+                    id : 'POItems',
+                    purpose: #STANDARD,
+                    type:#COLLECTION,
+                    position: 10,
+                    label: 'Purchasing Organization Data'
+               },
+               {
+
+                      id: 'CustInn',
+                      purpose:#STANDARD,
+                      parentId: 'POItems',
+                      position:20,
+                      targetQualifier: 'Orginfo',
+                      type:#FIELDGROUP_REFERENCE,
+                      label:'Purchasing Organization Info'
+                    },
+                     {
+                  id:'Headerr1',
+                  purpose: #HEADER,
+                  type:#DATAPOINT_REFERENCE,
+                  targetQualifier:'HDD',
+                  position: 10
+                },
+                {
+                  id:'Header2',
+                  purpose: #HEADER,
+                  type:#DATAPOINT_REFERENCE,
+                  label: 'Total Amount Progress',
+                  targetQualifier:'Netpr',
+                  position: 30
+                },
+
+                    {
+
+                      id: 'CustInfo',
+                      purpose:#STANDARD,
+                      parentId: 'POItems',
+                      position:30,
+                      targetQualifier: 'Details',
+                      type:#FIELDGROUP_REFERENCE,
+                      label:'Details of Person Responsible'
+                    }]
+
+  @EndUserText.label: 'Purchasing Info Record Number'
+  @EndUserText.quickInfo: 'Purchasing Info Record Number'
+  @UI.lineItem: [{ position: 20 }]
+  //  {  type: #FOR_ACTION , dataAction: 'copyPurcOrg',label: 'Copy Organization' }]
+  @UI.fieldGroup: [{ position: 20,qualifier: 'Orginfo' }]
+  Infnr;
+  @EndUserText.label: 'Purchasing Organization'
+  @EndUserText.quickInfo: 'Purchasing Organizations'
+  @UI.lineItem: [{ position: 10 }]
+  @UI.fieldGroup: [{ position: 10,qualifier: 'Orginfo' }]
+  Ekorg;
+  @EndUserText.label: 'Purchasing info record category'
+  @EndUserText.quickInfo: 'Purchasing info record categorys'
+  @UI.lineItem: [{ position: 30 }]
+  @UI.fieldGroup: [{ position: 30,qualifier: 'Orginfo' }]
+  Esokz;
+  @EndUserText.label: 'Plant'
+  @EndUserText.quickInfo: 'Plants'
+  @UI.lineItem: [{ position: 40 }]
+  @UI.identification: [{ position: 40 }]
+  @Consumption.valueHelpDefinition: [{ entity: { element: 'comp_code', name: 'z_vh_comcode641' } }]
+  @UI.fieldGroup: [{ position: 40,qualifier: 'Orginfo' }]
+
+  Werks;
+  @EndUserText.label: 'Name'
+  @EndUserText.quickInfo: 'Name'
+  @UI.lineItem: [{ position: 50 }]
+  @UI.fieldGroup: [{ position: 80,qualifier: 'Details' }]
+  Ernam;
+  @EndUserText.label: 'Record Creation Date'
+  @EndUserText.quickInfo: 'Record Creation Date'
+  @UI.fieldGroup: [{ position: 85,qualifier: 'Details' }]
+  Erdat;
+  @EndUserText.label: 'Purchasing Document Number'
+  @EndUserText.quickInfo: 'Purchasing Document Number'
+  @UI.fieldGroup: [{ position: 45,qualifier: 'Orginfo' }]
+  Ebeln;
+  @EndUserText.label: 'Item Number of Purchasing Document'
+  @EndUserText.quickInfo: 'Item Number of Purchasing Document'
+  @UI.fieldGroup: [{ position: 50,qualifier: 'Orginfo' }]
+  Ebelp;
+  @EndUserText.label: 'Quantity'
+  @EndUserText.quickInfo: 'Quantity'
+  @UI.fieldGroup: [{ position: 55,qualifier: 'Orginfo' }]
+  @Consumption.valueHelpDefinition: [{ entity: { element: 'UnitOfMeasure', name: 'ZI_VH_UnitOfMeasure' } }]
+  Meins;
+  @EndUserText.label: 'Purchase Order Quantity'
+  @EndUserText.quickInfo: 'Purchase Order Quantity'
+  @UI.fieldGroup: [{ position: 60,qualifier: 'Orginfo' }]
+  @UI.dataPoint:{
+       qualifier: 'Bstma',
+       criticality: 'Bstma',
+       targetValue: 100,
+       visualization: #RATING,
+       title: 'Quantity'
+  }
+  @UI.lineItem: [{ position: 45, label: 'Quantity', importance: #HIGH, type: #AS_DATAPOINT }]
+
+  Bstma;
+  @EndUserText.label: 'Currency Key'
+  @EndUserText.quickInfo: 'Currency Key'
+  @UI.fieldGroup: [{ position: 65,qualifier: 'Orginfo' }]
+  @Consumption.valueHelpDefinition: [{ entity: { element: 'Currency', name: 'ZI_VH_Currency' } }]
+  Waers;
+  @EndUserText.label: 'Net Price'
+  @EndUserText.quickInfo: 'Net Price'
+  @UI.fieldGroup: [{ position: 70,qualifier: 'Orginfo' }]
+  @UI.dataPoint:{
+        qualifier: 'Netpr',
+        criticality: 'Netpr',
+        targetValue: 100,
+        visualization: #PROGRESS,
+        title: 'Total Value'
+  }
+  @UI.lineItem: [{ position: 50, label: 'Net Value', importance: #HIGH, type: #AS_DATAPOINT }]
+  Netpr;
+  @EndUserText.label: 'Last Changed At'
+  @UI.fieldGroup: [{ position: 90,qualifier: 'Details' }]
+  LastChangedAt;
+  @UI.dataPoint:{ title:'Toatl Quantity * Amount', qualifier: 'HDD' }
+  TotalAmount;
+
+}

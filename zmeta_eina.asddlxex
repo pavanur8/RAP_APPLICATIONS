@@ -1,0 +1,230 @@
+@Metadata.layer: #CORE
+@UI:{
+     headerInfo: {
+    typeName: 'Purchasing Info Record',
+    typeNamePlural: 'Purchasing Info Records',
+    title.value: 'Infnr',
+     description : { value: 'Erdat' },
+//typeImageUrl: 'zimage'},
+//typeImageUrl: 'https://raw.githubusercontent.com/SAP-samples/fiori-elements-opensap/main/week1/images/airlines/Fly-Africa-logo.png'},
+//typeImageUrl: 'https://th.bing.com/th?q=GitHub+Logo+Black+and+White+PNG&w=120&h=120&c=1&rs=1&qlt=70&o=7&cb=1&dpr=1.5&pid=InlineBlock&rm=3&mkt=en-IN&cc=IN&setlang=en&adlt=moderate&t=1&mw=247'},
+typeImageUrl: 'https://th.bing.com/th/id/OIP.HPER7nNopdFCyRkAPMU6wAHaHa?w=159&h=180&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3'},
+presentationVariant: [{ sortOrder: [{ by: 'Infnr', direction: #ASC }] }]
+}
+//
+//
+@UI.chart: [
+  {
+    qualifier: 'radialChart',
+    title: 'Occupation Rate',
+    description: 'maximum number of Supliers',
+    chartType: #DONUT,
+    measures: ['Lifnr'],
+    measureAttributes: [
+      {
+        measure: 'Lifnr',
+        role: #AXIS_1,
+        asDataPoint: true
+      }
+    ]
+  }
+]
+
+annotate entity z_c_eina with
+{
+  @UI.facet: [{
+                 id : 'piena',
+                 purpose: #STANDARD,
+                 position: 10,
+                 label: 'Purchasing Info Record',
+                 type: #COLLECTION
+                },
+                    {
+                      id   : 'piiena',
+                      type       :#DATAPOINT_REFERENCE,
+                      targetQualifier: 'radialChart'
+                   },
+                 {
+
+                      id: 'BasicInfo',
+                      purpose:#STANDARD,
+                      parentId: 'piena',
+                      position:10,
+                      targetQualifier: 'Recinfo',
+                      type:#FIELDGROUP_REFERENCE,
+                      label:'Purchasing Info Record'
+
+                 },
+
+  //                    {
+  //                      purpose: #QUICK_VIEW,
+  //                      type:    #FIELDGROUP_REFERENCE,
+  //                      targetQualifier: 'BP_QV',
+  //                      label:  'Additional Details'
+  //                  },
+
+                  {
+
+                      id: 'CustInfo',
+                      purpose:#STANDARD,
+                      parentId: 'piena',
+                      position:20,
+                      targetQualifier: 'Details',
+                      type:#FIELDGROUP_REFERENCE,
+                      label:'Details of Person Responsible'
+                    },
+                 {
+                  id:'Header22',
+                  purpose: #HEADER,
+                  type:#DATAPOINT_REFERENCE,
+                  targetQualifier:'HDD',
+                  position: 10
+                },
+                {
+                  id:'Hea2',
+                  purpose: #HEADER,
+                  type:#DATAPOINT_REFERENCE,
+                  label: 'Total Amount Progress',
+                  targetQualifier:'Matnr',
+                  position: 35
+                },
+                  {
+                  id:'Heaa2',
+                  purpose: #HEADER,
+                  type:#DATAPOINT_REFERENCE,
+                  label: 'Total Amount Progress',
+                  targetQualifier:'Matkl',
+                  position: 40
+                },
+
+
+                {
+                     id: 'POItems',
+                      purpose: #STANDARD,
+                      type:#LINEITEM_REFERENCE,
+                      position: 20,
+                      targetElement: '_eine',
+                      label: 'Purchasing Organization Data'
+                }]
+
+
+  @EndUserText.label: 'Purchasing Info Record Number'
+  @EndUserText.quickInfo: 'Purchasing Info Record Number'
+  @UI.lineItem: [{ position: 10 },{  type: #FOR_ACTION , dataAction: 'SendEmaill',label: 'Email' },
+  { type: #FOR_ACTION,dataAction: 'copyPurchaseInfo',label: 'Copy Purchase Info' }]
+  //@UI.identification: [{position: 10  }]
+  //@UI.dataPoint:{ title:'Purchase Record Number', qualifier: 'HD' }
+  @UI.fieldGroup: [{ position: 10,qualifier: 'Recinfo' }]
+  @UI.dataPoint:{
+       qualifier: 'piiena',
+       criticality: 'Infnr',
+       targetValue: 100,
+       visualization: #PROGRESS
+  }
+  @UI.selectionField: [{ position: 10 }]
+
+  Infnr;
+  @EndUserText.label: 'Material Number'
+  @EndUserText.quickInfo: 'Material Number'
+  //@UI.lineItem: [{position: 20}]
+  @UI.fieldGroup: [{ position: 20,qualifier: 'Recinfo' }]
+
+  @UI.lineItem: [{ type: #AS_DATAPOINT,position: 65,importance: #HIGH,label: 'Material Ratings' }]
+  @Consumption.valueHelpDefinition: [{ entity: { element: 'Material', name: 'zi_mat_mg' },
+  additionalBinding: [{ element: 'MaterialGroup', localElement: 'Matkl', usage: #FILTER_AND_RESULT }] }]
+  @UI.dataPoint:{
+         qualifier: 'Matnr',
+         criticality: 'Deliverystatus',
+         targetValue: 80,
+         visualization: #PROGRESS,
+         title: 'Material'
+   }
+  Matnr;
+  @EndUserText.label: 'Material Group'
+  @EndUserText.quickInfo: 'Material Group'
+  @UI.fieldGroup: [{ position: 30,qualifier: 'Recinfo' }]
+  @UI.lineItem: [{ type: #AS_DATAPOINT,position: 70,importance: #HIGH,label: 'Material Group Ratings' }]
+  @UI.dataPoint:{
+       qualifier: 'Matkl',
+       criticality: 'Deliverystatus',
+       targetValue: 5,
+       visualization: #RATING,
+       title: 'Material'
+  }
+  Matkl;
+  @EndUserText.label: 'Supplier Number'
+  @EndUserText.quickInfo: 'Suppliers Account Number'
+  //@UI.lineItem: [{ position: 40 }]
+  @UI.fieldGroup: [{ position: 40,qualifier: 'Recinfo' }]
+  @Consumption.valueHelpDefinition: [{ entity: { element: 'SuplierId', name: 'zi_supli_count' },
+  additionalBinding: [{ element: 'Country', localElement: 'Urzla', usage: #FILTER_AND_RESULT }] }]
+  Lifnr;
+  @EndUserText.label: 'Status'
+  @EndUserText.quickInfo: 'Status'
+  @UI.lineItem: [{ position: 40,criticality: 'Deliverystatus'  },
+  { type: #FOR_ACTION,dataAction: 'setStatuss',label: 'Set Status',criticality: 'Deliverystatus' }]
+  @UI.fieldGroup: [{ position: 45,qualifier: 'Recinfo' }]
+  Status;
+  @EndUserText.label: 'Name'
+  @EndUserText.quickInfo: 'Name of purchase Info Created'
+  @UI.lineItem: [{
+        label: 'Name',
+        importance: #HIGH,
+        position: 90
+      }]
+  //       {
+  //        label: 'IntentBased Navigation',
+  //        type: #FOR_INTENT_BASED_NAVIGATION,
+  //        semanticObjectAction: '_ShipToPartyQuickView',
+  //        requiresContext: true
+
+  @UI.dataPoint:{ title:'Purchase Record Creater Name', qualifier: 'HDD',criticality: 'Deliverystatus' }
+  @UI.fieldGroup: [{ position: 70,qualifier: 'Details' }]
+  @Consumption.semanticObject: 'Ernam'
+  Ernam;
+  @EndUserText.label: 'Record Creation Date'
+  @EndUserText.quickInfo: 'Record Creation Date'
+  @UI.fieldGroup: [{ position: 80,qualifier: 'Details' }]
+  Erdat;
+  @EndUserText.label: 'Purchase Order Unit of Measure'
+  @EndUserText.quickInfo: 'Purchase Order Unit of Measure'
+  @Consumption.valueHelpDefinition: [{ entity: { element: 'UnitOfMeasure', name: 'ZI_VH_UnitOfMeasure' },useForValidation: true}]
+  @UI.fieldGroup: [{ position: 50,qualifier: 'Recinfo' }]
+  Meins;
+  @EndUserText.label: 'Telephone Number'
+  @EndUserText.quickInfo: 'Telephone Number'
+  @UI.fieldGroup: [{ position: 85,qualifier: 'Details' }]
+  Telf1;
+  @EndUserText.label: 'Country/Region'
+  @EndUserText.quickInfo: 'Country/Region'
+  @UI.fieldGroup: [{ position: 90,qualifier: 'Details' }]
+  @UI.lineItem: [{ position: 95,type: #WITH_INTENT_BASED_NAVIGATION,semanticObject: 'Show' }]
+  @Consumption.semanticObject: 'BusinessPartner'
+//  @UI.lineItem: [{ position: 95,type: #WITH_URL,url: 'https://th.bing.com/th/id/OIP.HPER7nNopdFCyRkAPMU6wAHaHa?w=159&h=180&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3' }]
+  Urzla;
+  @EndUserText.label: 'Manufacturer'
+  @EndUserText.quickInfo: 'Manufacturer'
+  @UI.fieldGroup: [{ position: 60,qualifier: 'Recinfo',hidden:#( ishide ) }]
+  @Consumption.valueHelpDefinition: [{ entity: { element: 'Manfacture', name: 'zi_supli_count' } }]
+  Mfrnr;
+  @EndUserText.label: 'Last Changed At'
+  @UI.fieldGroup: [{ position: 95,qualifier: 'Details' },
+  { type: #FOR_INTENT_BASED_NAVIGATION, label: 'Send request', semanticObject: 'my_semantic_object', semanticObjectAction: 'create'}]
+
+  //@UI: {
+  //  lineItem: [
+  //    { position: 30, value: 'LastChangedAt',
+  //      type: #DATA_FIELD_FOR_INTENT_BASED_NAVIGATION,
+  //      semanticObject: 'Customer',
+  //      action: 'display'
+  //    }
+  //  ]
+  //}
+
+  LastChangedAt;
+  @UI.lineItem: [{ position: 5,label: 'Logo' }]
+  //  @Consumption.
+
+  Imagee;
+
+}
